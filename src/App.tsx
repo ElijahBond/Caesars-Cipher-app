@@ -1,16 +1,19 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.scss'
 
-function App() {
-  const [count, setCount] = useState(0)
+export const App = () => {
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   return (
-    <div className="App">
-      
+    <div
+      data-theme={isDarkTheme ? 'dark' : 'light'}
+      className="App"
+    >
+      <button 
+        className='button-change-theme' 
+        onClick={() => setIsDarkTheme(!isDarkTheme)}
+      >Change theme</button>
     </div>
   )
-}
-
-export default App
+};
