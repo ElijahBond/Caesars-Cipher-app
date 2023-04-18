@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-import './App.scss'
+import { Cypher } from './components/Cypher.component';
+
+import './App.scss';
 
 export const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
@@ -8,12 +10,13 @@ export const App = () => {
   return (
     <div
       data-theme={isDarkTheme ? 'dark' : 'light'}
-      className="App"
+      className="app"
     >
-      <button 
-        className='button-change-theme' 
-        onClick={() => setIsDarkTheme(!isDarkTheme)}
-      >Change theme</button>
+
+      <div className='app-container'>
+        <Cypher onSetTheme={() => setIsDarkTheme(!isDarkTheme)} />
+      </div>
+
     </div>
   )
 };
