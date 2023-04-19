@@ -1,12 +1,23 @@
-import {  Stack, Switch, Typography, Input } from '@mui/material';
+import {  Stack, Switch, Typography, Input, Button } from '@mui/material';
 import { useState } from 'react';
 
 import './Cypher.styles.scss';
+import { cypher } from './cypher';
 
 const Cypher = ({ onSetTheme }: any) => {
-    const [key, setKey] = useState(null);
+    const [key, setKey] = useState<string | number>('');
+    const [plainWord, setPlainWord] = useState<string>('');
+    const [cypheredWord, setCypheredWord] = useState<string>('');
 
-    console.log(key)
+    // console.log(key, cypheringWord)
+
+    const onButtonHandler = () => {
+        console.log(key, plainWord)
+        console.log(typeof key)
+
+        const res = cypher(plainWord, +key);
+        console.log(res)
+    }
 
     return (
         <div className='cypher'>
@@ -27,31 +38,52 @@ const Cypher = ({ onSetTheme }: any) => {
                 </div>
                 <div className='cypher-instruction__description'>
                     <p> 
-                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
+                    In the Caesars cypher, each letter of a word or sentence 
+                    is replaced bu a letter shifted by the value of the key. For example,
+                    with key = 3, 'a' replacind to 'd', 'e' to 'h' and so on.
+                    <br />
+                    This app can do it, enjoy)
                     </p>
                 </div>
             </div>
+
             <div>
-            <Input 
-                placeholder="Write key here"
-                color='secondary'
-                style={{ color: "white"}}
-                value={key}
-                onChange={e => setKey((+e.target.value))} />
+                <h4>1.Write your key</h4>
+                <Input 
+                    type='number'
+                    placeholder="Write key here"
+                    color='secondary'
+                    style={{ color: "red"}}
+                    value={key}
+                    onChange={e => setKey((+e.target.value))} />
             </div>
-            <div> button </div>
-            <div> cyphered result</div>
+
+
+            <div>
+                <h4>2.Write word which need cyphering (only letter IN LOWER CASE and spaces)</h4>
+                <Input 
+                    type='text'
+                    placeholder="Write word or sentence"
+                    color='secondary'
+                    style={{ color: "red"}}
+                    value={plainWord}
+                    onChange={e => setPlainWord((e.target.value))} />
+            </div>
+            <div>
+                <h4>3.Click on button to see you ciphered word</h4>
+                <Button 
+                    variant="contained" 
+                    color="secondary"
+                    onClick={() => onButtonHandler()}
+                >
+                    Cypher!
+                </Button>
+
+                <h4>{cypheredWord}</h4>
+            </div>
         </div>
     )
     
 }
 
-export { Cypher }
+export { Cypher };
