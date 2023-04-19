@@ -1,22 +1,22 @@
 import {  Stack, Switch, Typography, Input, Button } from '@mui/material';
 import { useState } from 'react';
 
-import './Cypher.styles.scss';
 import { cypher } from './cypher';
 
-const Cypher = ({ onSetTheme }: any) => {
+import './Cypher.styles.scss';
+
+const Cypher = ({ onSetTheme }: any)  => {
     const [key, setKey] = useState<string | number>('');
     const [plainWord, setPlainWord] = useState<string>('');
     const [cypheredWord, setCypheredWord] = useState<string>('');
 
-    // console.log(key, cypheringWord)
-
     const onButtonHandler = () => {
-        console.log(key, plainWord)
-        console.log(typeof key)
+        let res = '';
 
-        const res = cypher(plainWord, +key);
-        console.log(res)
+        if (typeof key === 'number') {
+            res = cypher(plainWord, key);
+        }
+        setCypheredWord(res);
     }
 
     return (
@@ -48,19 +48,18 @@ const Cypher = ({ onSetTheme }: any) => {
             </div>
 
             <div>
-                <h4>1.Write your key</h4>
+                <h4>1.Write your key (number from 1 to 25)</h4>
                 <Input 
                     type='number'
                     placeholder="Write key here"
                     color='secondary'
                     style={{ color: "red"}}
-                    value={key}
+                    value={key}  
                     onChange={e => setKey((+e.target.value))} />
             </div>
 
-
             <div>
-                <h4>2.Write word which need cyphering (only letter IN LOWER CASE and spaces)</h4>
+                <h4>2.Write word which need cyphering <br />(only letter IN LOWER CASE and spaces)</h4>
                 <Input 
                     type='text'
                     placeholder="Write word or sentence"
@@ -79,7 +78,12 @@ const Cypher = ({ onSetTheme }: any) => {
                     Cypher!
                 </Button>
 
-                <h4>{cypheredWord}</h4>
+                {cypheredWord && (
+                    <>
+                        <h4>Your cyphered word/sentence:</h4>
+                        <h4>{cypheredWord}</h4>
+                    </>
+                )}
             </div>
         </div>
     )

@@ -1,5 +1,4 @@
 export const cypher = (str: string, key: number) => {
-    // let key = 13;
     let alphabet = 'abcdefghijklmnopqrstuvwxyz'.toLowerCase();
     let res = [];
 
