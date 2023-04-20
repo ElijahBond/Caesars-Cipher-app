@@ -5,13 +5,21 @@ import { cypher } from './cypher';
 
 import './Cypher.styles.scss';
 
-const Cypher = ({ onSetTheme }: any)  => {
+interface ICypher {
+    onSetTheme: () => void
+}
+
+const Cypher = ({ onSetTheme }: ICypher)  => {
     const [key, setKey] = useState<string | number>('');
     const [plainWord, setPlainWord] = useState<string>('');
     const [cypheredWord, setCypheredWord] = useState<string>('');
 
     const onButtonHandler = () => {
-        let res = '';
+        let res: void | string = '';
+
+        if (key < 1 || key > 25) {
+            return res = setCypheredWord('Write correct key')
+        }
 
         if (typeof key === 'number') {
             res = cypher(plainWord, key);
@@ -59,7 +67,7 @@ const Cypher = ({ onSetTheme }: any)  => {
             </div>
 
             <div>
-                <h4>2.Write word which need cyphering <br />(only letter IN LOWER CASE and spaces)</h4>
+                <h4>2.Write word which need cyphering <br />(only letter IN LOWER CASE)</h4>
                 <Input 
                     type='text'
                     placeholder="Write word or sentence"
@@ -69,7 +77,7 @@ const Cypher = ({ onSetTheme }: any)  => {
                     onChange={e => setPlainWord((e.target.value))} />
             </div>
             <div>
-                <h4>3.Click on button to see you ciphered word</h4>
+                <h4>3.Click on button to see you cyphered word</h4>
                 <Button 
                     variant="contained" 
                     color="secondary"
@@ -80,8 +88,8 @@ const Cypher = ({ onSetTheme }: any)  => {
 
                 {cypheredWord && (
                     <>
-                        <h4>Your cyphered word/sentence:</h4>
-                        <h4>{cypheredWord}</h4>
+                        <h4 data-testid="resultButton">Your cyphered word/sentence:</h4>
+                        <h4 data-testid="cypheredWord">{cypheredWord}</h4>
                     </>
                 )}
             </div>
